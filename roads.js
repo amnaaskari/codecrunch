@@ -4,12 +4,12 @@ function roadsAndLibraries(n, c_lib, c_road, array) {
   n: int, number of cities
   c_lib: int, cost of library
   c_road: int, cost of roads
-  array: 2D array of connections i.e. edge list
+  cities: array, connections
   */
 
   let totalCost;
 
-  if (c_road > c_lib) {
+  if (c_road >= c_lib) {
     totalCost = c_lib * n;
   } else {
     let adjacencyList = {};
@@ -42,6 +42,7 @@ function roadsAndLibraries(n, c_lib, c_road, array) {
       }
 
       connections.forEach(city => {
+        console.log(x, city);
         if (!visitedNodes.has(city)) {
           visitedNodes.add(city);
           roadCount++;
