@@ -55,6 +55,8 @@ function roadsAndLibraries(n, c_lib, c_road, array) {
   return totalCost;
 }
 
+// roadsAndLibraries(3, 2, 1, [[1, 2], [3, 1], [2, 3]])
+
 module.exports = {
   roadsAndLibraries
 };
