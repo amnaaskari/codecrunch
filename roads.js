@@ -42,7 +42,6 @@ function roadsAndLibraries(n, c_lib, c_road, array) {
       }
 
       connections.forEach(city => {
-        console.log(x, city);
         if (!visitedNodes.has(city)) {
           visitedNodes.add(city);
           roadCount++;
