@@ -1,3 +1,5 @@
+let { Queue } = require("./dataStructures/stacksNqueues.js");
+
 function roadsAndLibraries(n, c_lib, c_road, array) {
   /*
   Inputs:
@@ -20,7 +22,6 @@ function roadsAndLibraries(n, c_lib, c_road, array) {
     });
 
     array.forEach(connection => {
-      // QUESTION: how to scale for more than 2 connections ? is it two two way for loops?
       let first = connection[0];
       let second = connection[1];
 
@@ -30,32 +31,36 @@ function roadsAndLibraries(n, c_lib, c_road, array) {
 
     let roadCount = 0;
     let visitedNodes = new Set(); // Set or array of booleans?
+    let toDo = new Queue();
     let libraryCount = 0;
 
-    for (let x in adjacencyList) {
-      const cityNumber = x;
-      const connections = adjacencyList[x].connections;
-
-      if (!visitedNodes.has(parseInt(x))) {
-        visitedNodes.add(parseInt(x));
+    for (let node in adjacencyList) {
+      if (!visitedNodes.has(parseInt(node))) {
+        toDo.enqueue(parseInt(node));
         libraryCount++;
-      }
+        visitedNodes.add(parseInt(node));
+        while (toDo.values.length) {
+          let popped = toDo.dequeue();
 
-      connections.forEach(city => {
-        if (!visitedNodes.has(city)) {
-          visitedNodes.add(city);
-          roadCount++;
+          const connections = adjacencyList[popped].connections;
+
+          connections.forEach(connection => {
+            if (!visitedNodes.has(connection)) {
+              roadCount++;
+              toDo.enqueue(connection);
+              visitedNodes.add(connection);
+            }
+          });
         }
-      });
+      }
     }
-
     totalCost = libraryCount * c_lib + c_road * roadCount;
   }
 
   return totalCost;
 }
 
-// roadsAndLibraries(3, 2, 1, [[1, 2], [3, 1], [2, 3]])
+roadsAndLibraries(4, 2, 1, [[1, 4], [3, 4], [2, 3]]);
 
 module.exports = {
   roadsAndLibraries
